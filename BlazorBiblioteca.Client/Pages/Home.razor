@@ -1,0 +1,250 @@
+﻿@page "/"
+@inject HttpClient Http
+@inject NavigationManager Navigation
+@using BlazorBiblioteca.shared
+
+
+<PageTitle>Biblioteca</PageTitle>
+
+<h1>Libros disponibles</h1>
+<br />
+
+<p>@conexionServidor</p>
+<p>@conexionBBDD</p>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <p><strong>@message</strong></p>    
+}
+
+<h2>Formulario</h2>
+    
+
+<div>
+    <EditForm Model="@libro" OnValidSubmit="CreateOrUpdateLibro" FormName="createOrUpdate">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <InputNumber @bind-Value="libro.Id" hidden></InputNumber>
+        <div>
+            <label for="NombreLibro">Nombre del libro</label>
+            <InputText id="NombreLibro" @bind-Value="libro.NombreLibro"></InputText>
+            <ValidationMessage For="(() => libro.NombreLibro)" />
+        </div>
+        <br />
+
+        <div>
+        <label for="AutorLibro">Autor </label>
+        <InputText id="AutorLibro" @bind-Value="libro.AutorLibro"></InputText>
+        <ValidationMessage For="(() => libro.AutorLibro)" />
+        </div>
+        <br />
+
+        <div>
+        <label for="NumPaginas">Cantidad de paginas</label>
+        <InputNumber id="NumPaginas" @bind-Value="libro.NumPaginas"></InputNumber>
+        <ValidationMessage For="(() => libro.NumPaginas)"/>
+        </div>
+        <br />  
+
+        <div>
+        <label for="FechaPublicacion">Fecha de publicacion</label>
+        <InputDate id="FechaPublicacion" @bind-Value="libro.FechaPublicacion"></InputDate>
+        <ValidationMessage For="(() => libro.FechaPublicacion)" />
+        </div>
+        <br />
+
+        <div>
+        <button type="submit">Guardar informacion</button>
+        </div>
+        <br />
+
+    </EditForm>
+
+</div>
+
+<div class="column">
+    @if (libros.Count == 0)
+    {
+        <h3>No existen registros @message   </h3>
+    }
+    else
+    {
+        <p><strong>Listado de peliculas</strong></p> 
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nombre</th>
+                    <th>Autor</th>
+                    <th>Paginas</th>
+                    <th>Publicacion</th>
+                    <th>Actualizar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                @foreach (var l in libros)
+                {
+                    <tr @key="l.Id">
+                        <td>@l.Id</td>
+                        <td>@l.NombreLibro</td>
+                        <td>@l.AutorLibro</td>
+                        <td>@l.NumPaginas</td>
+                        <td>@l.FechaPublicacion</td>
+
+                        <td><button @onclick="() => this.libro = l">Actualizar</button></td>
+                        <td><button @onclick="() => DeleteLibro(l.Id)">Eliminar</button></td>
+                    </tr>
+                }
+            </tbody>
+        </table> 
+    }
+</div>
+
+@code {
+    string conexionServidor = "conectando...";
+    string conexionBBDD = "Conectando....";
+
+    string message = string.Empty;
+    List<Libro> libros = new List<Libro>();
+
+    [SupplyParameterFromForm(FormName = "createOrUpdate")]
+    public Libro libro { get; set; } = new();
+
+    async Task ProbarConeccion()
+    {
+        //try
+        //{
+          //  var urlBase = Navigation.BaseUri;
+
+          //  var respuesta = await Http.GetStringAsync($"{urlBase}api/libros/ConeccionServidor");
+          //  conexionServidor = respuesta;
+
+          //  var respuestaBBDD = await Http.GetStringAsync($"{urlBase}api/libros/ConeccionBBDD");
+          //  conexionBBDD = respuestaBBDD;
+        //}
+        //catch (Exception ex)
+        //{
+            //conexionServidor = "Error al conectar al servidor";
+            //conexionBBDD = $"Detalle:{ex.Message}";
+        //}
+        try
+        {
+            // Al usar HttpClient con BaseAddress, solo pasa la ruta relativa comenzando con "/"
+            var respuesta = await Http.GetStringAsync("api/libros/ConexionServidor");
+            conexionServidor = respuesta;
+
+            var respuestaBBDD = await Http.GetStringAsync("api/libros/ConexionBBDD");
+            conexionBBDD = respuestaBBDD;
+        }
+        catch (Exception ex)
+        {
+            conexionServidor = "Error al conectar al servidor";
+            conexionBBDD = $"Detalle:{ex.Message}";
+        }
+
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ProbarConeccion();
+        await ObtenerLibros();
+    }
+
+    async Task CreateLibro()
+    {
+        var urlBase = Navigation.BaseUri;
+        var res = await Http.PostAsJsonAsync($"{urlBase}api/libros/AgregarLibro", libro);
+
+        if (res.IsSuccessStatusCode)
+        {
+            message = "Nuevo libro disponible!";
+            libro = new();
+        }
+        else
+        {
+            message = "Error al crear libro";
+        }
+        await ObtenerLibros();
+    }
+
+    async Task UpdateLibro()
+    {
+        var urlBAse = Navigation.BaseUri;
+        var res = await Http.PutAsJsonAsync($"{urlBAse}api/libros/ActualizarLibro", libro);
+
+        if (res.IsSuccessStatusCode)
+        {
+            message = $"Libro {libro.NombreLibro} actualizado con exito!!";
+        }
+        else
+        {
+            message = "Error al actualizar libro"; 
+        }
+
+        libro = new();
+        await ObtenerLibros();
+
+    }
+
+
+    async Task CreateOrUpdateLibro()
+    {
+        if (libro.Id == 0)
+            await CreateLibro();
+        else
+            await UpdateLibro();
+    }
+
+
+    async Task ObtenerLibros()
+    {
+        //try
+        //{
+            //var urlBAse = Navigation.BaseUri;
+            //var libr = await Http.GetFromJsonAsync<List<Libro>>($"{urlBAse}api/libros/ObtenerLibros");
+            //if (libr != null)
+            //{
+                //libros = libr;  
+            //}
+        //}
+        //catch (Exception ex)
+        //{
+            //message = ex.Message;
+       // }
+        try
+        {
+            var libr = await Http.GetFromJsonAsync<List<Libro>>("api/libros/ObtenerLibros");
+            if (libr != null)
+            {
+                libros = libr;
+            }
+        }
+        catch (Exception ex)
+        {
+            message = ex.Message;
+        }
+
+    }
+
+    async Task DeleteLibro( int id)
+    {
+        var urlBase = Navigation.BaseUri;
+        var res = await Http.DeleteAsync($"{urlBase}api/libros/EliminarLibro/{id}");
+
+        if (res.IsSuccessStatusCode) 
+        {
+            message = "Pelicula eliminada";
+
+            await ObtenerLibros();
+        }
+        else
+        {
+            message = "Error al eliminar";  
+        }
+
+    }
+
+}
