@@ -6,21 +6,28 @@
 
 <PageTitle>Biblioteca</PageTitle>
 
-<h1>Libros disponibles</h1>
+<h1>LIBROS DISPONIBLES </h1>
 <br />
 
-<p>@conexionServidor</p>
-<p>@conexionBBDD</p>
+<div class="mensajesuser">
+    <p>@conexionServidor</p>
+    <p>@conexionBBDD</p>
 
-@if (!string.IsNullOrEmpty(message))
-{
-    <p><strong>@message</strong></p>    
-}
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <p><strong>@message</strong></p>
+    }
 
-<h2>Formulario</h2>
+</div>
+
+
+
+
     
 
-<div>
+<div class="formulario">
+    <h2>Formulario</h2>
+
     <EditForm Model="@libro" OnValidSubmit="CreateOrUpdateLibro" FormName="createOrUpdate">
         <DataAnnotationsValidator />
         <ValidationSummary />
@@ -54,9 +61,9 @@
         </div>
         <br />
 
-        <div>
+        
         <button type="submit">Guardar informacion</button>
-        </div>
+        
         <br />
 
     </EditForm>
@@ -70,7 +77,7 @@
     }
     else
     {
-        <p><strong>Listado de peliculas</strong></p> 
+        <p><strong>Listado de Libros en Biblioteca</strong></p> 
         <table border="1">
             <thead>
                 <tr>
@@ -115,21 +122,7 @@
 
     async Task ProbarConeccion()
     {
-        //try
-        //{
-          //  var urlBase = Navigation.BaseUri;
-
-          //  var respuesta = await Http.GetStringAsync($"{urlBase}api/libros/ConeccionServidor");
-          //  conexionServidor = respuesta;
-
-          //  var respuestaBBDD = await Http.GetStringAsync($"{urlBase}api/libros/ConeccionBBDD");
-          //  conexionBBDD = respuestaBBDD;
-        //}
-        //catch (Exception ex)
-        //{
-            //conexionServidor = "Error al conectar al servidor";
-            //conexionBBDD = $"Detalle:{ex.Message}";
-        //}
+        
         try
         {
             // Al usar HttpClient con BaseAddress, solo pasa la ruta relativa comenzando con "/"
@@ -201,19 +194,7 @@
 
     async Task ObtenerLibros()
     {
-        //try
-        //{
-            //var urlBAse = Navigation.BaseUri;
-            //var libr = await Http.GetFromJsonAsync<List<Libro>>($"{urlBAse}api/libros/ObtenerLibros");
-            //if (libr != null)
-            //{
-                //libros = libr;  
-            //}
-        //}
-        //catch (Exception ex)
-        //{
-            //message = ex.Message;
-       // }
+        
         try
         {
             var libr = await Http.GetFromJsonAsync<List<Libro>>("api/libros/ObtenerLibros");
@@ -236,7 +217,7 @@
 
         if (res.IsSuccessStatusCode) 
         {
-            message = "Pelicula eliminada";
+            message = "Libro eliminado";
 
             await ObtenerLibros();
         }

@@ -1,0 +1,198 @@
+﻿
+body {
+    background-color: #f1f5f9;
+    color: #1e293b;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    margin: 0;
+    padding: 40px 20px;
+}
+
+
+h1, .mensajesuser, .formulario, .column {
+    width: 100%;
+    max-width: 650px;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+}
+
+/* Título  */
+h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: #0f172a;
+    text-align: center;
+    margin-bottom: 25px;
+    border-bottom: 3px solid #0284c7;
+    padding-bottom: 12px;
+}
+
+
+.mensajesuser {
+    background-color: #e0f2fe;
+    border: 1px solid #bae6fd;
+    border-left: 4px solid #0284c7;
+    padding: 16px 20px;
+    border-radius: 8px;
+    text-align: center;
+    color: #0369a1;
+    margin-bottom: 25px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+    .mensajesuser p {
+        margin: 6px 0;
+    }
+
+
+.formulario {
+    background-color: #f8fafc;
+    border: 1px solid #cbd5e1;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+    margin-bottom: 30px;
+}
+
+    .formulario h2 {
+        color: #0f172a;
+        font-size: 1.25rem;
+        border-left: 4px solid #10b981;
+        padding-left: 10px;
+        margin-top: 0;
+        margin-bottom: 20px;
+    }
+
+    
+    .formulario > form > div:nth-of-type(1) {
+        background-color: #ffffff;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        margin-bottom: 14px;
+    }
+
+    .formulario > form > div:nth-of-type(2) {
+        background-color: #f1f5f9;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #cbd5e1;
+        margin-bottom: 14px;
+    }
+
+    
+    .formulario > form > div:nth-of-type(3) {
+        background-color: #ecfdf5;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #a7f3d0;
+        margin-bottom: 14px;
+    }
+
+    
+    .formulario > form > div:nth-of-type(4) {
+        background-color: #f0fdf4;
+        padding: 12px 15px;
+        border-radius: 8px;
+        border: 1px solid #bbf7d0;
+        margin-bottom: 14px;
+    }
+
+label {
+    color: #334155;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    display: block;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"] {
+    width: 100%;
+    padding: 10px 14px;
+    background-color: #ffffff;
+    border: 1px solid #94a3b8;
+    color: #1e293b;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+}
+
+input:focus {
+    outline: none;
+    border-color: #0284c7;
+    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+}
+
+
+button[type="submit"] {
+    background-color: #10b981;
+    color: #ffffff;
+    font-weight: 700;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    transition: background-color 0.2s ease;
+}
+
+    button[type="submit"]:hover {
+        background-color: #059669;
+    }
+
+
+.column {
+    max-width: 900px !important;
+    background-color: #ffffff;
+    border: 1px solid #cbd5e1;
+    padding: 25px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #ffffff;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid #e2e8f0;
+    font-size: 0.9rem;
+    color: #334155;
+}
+
+th {
+    background-color: #f1f5f9;
+    font-weight: 600;
+    color: #0f172a;
+}
+
+tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+td button {
+    background-color: #0284c7;
+    color: #ffffff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease;
+}
+
+    td button:hover {
+        background-color: #0369a1;
+    }
