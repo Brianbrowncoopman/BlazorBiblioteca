@@ -33,7 +33,7 @@ namespace BlazorBiblioteca.Controller
             try
             {
                 var respuesta = await _context.Libro.FirstOrDefaultAsync();
-                return "correctamemnte conectado a la bbdd";
+                return "correctamente conectado a la bbdd";
             }
             catch (Exception ex)
             {

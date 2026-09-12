@@ -11,6 +11,8 @@ builder.Services.AddDbContext<LibrosDBContext>(options =>
 builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
+builder.Services.AddBlazorBootstrap();
+
 // Add services to the container.
 builder.Services.AddControllers();
 builder.Services.AddHttpClient();

@@ -1,198 +1,238 @@
 ﻿
-body {
-    background-color: #f1f5f9;
-    color: #1e293b;
-    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-    margin: 0;
+/* Contenedor general de la vista con degradado sutil y márgenes */
+.bg-degrade {
+    min-height: 100vh;
+    background: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
     padding: 40px 20px;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    color: #1e293b;
 }
 
-
-h1, .mensajesuser, .formulario, .column {
+/* Estructura central unificada para alinear componentes */
+h1, h3, .mensajesuser, .formulario, .column {
     width: 100%;
-    max-width: 650px;
+    max-width: 850px;
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;
 }
 
-/* Título  */
+/* Título Principal */
 h1 {
-    font-size: 1.8rem;
-    font-weight: 700;
+    font-size: 2rem;
+    font-weight: 800;
     color: #0f172a;
     text-align: center;
-    margin-bottom: 25px;
-    border-bottom: 3px solid #0284c7;
-    padding-bottom: 12px;
+    margin-bottom: 30px;
+    letter-spacing: -0.5px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
 
-
+/* Tarjeta de Estados de Conexión */
 .mensajesuser {
-    background-color: #e0f2fe;
-    border: 1px solid #bae6fd;
-    border-left: 4px solid #0284c7;
-    padding: 16px 20px;
-    border-radius: 8px;
-    text-align: center;
-    color: #0369a1;
-    margin-bottom: 25px;
-    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #0ea5e9;
+    padding: 20px 24px;
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+    margin-bottom: 30px;
+    transition: background-color 1.5s ease, border-color 1.5s ease, box-shadow 1.5s ease;
 }
 
-    .mensajesuser p {
-        margin: 6px 0;
+    .mensajesuser:hover {
+        background-color: #e1e5e6;
+        border: 3px solid #0ea5e9;
+        box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1);
     }
 
+    .mensajesuser p {
+        margin: 8px 0;
+        font-weight: 500;
+        font-size: 0.95rem;
+    }
 
+/* Tarjeta del Formulario */
 .formulario {
-    background-color: #f8fafc;
-    border: 1px solid #cbd5e1;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+    background-color: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #0ea5e9;
+    padding: 35px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
     margin-bottom: 30px;
+    transition: background-color 1.5s ease, border-color 1.5s ease, box-shadow 1.5s ease;
 }
+
+    .formulario:hover {
+        background-color: #e1e5e6; /* Oscurecimiento sobrio al pasar el mouse */
+        border: 3px solid #0ea5e9;
+        box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1);
+    }
 
     .formulario h2 {
         color: #0f172a;
-        font-size: 1.25rem;
-        border-left: 4px solid #10b981;
-        padding-left: 10px;
+        font-size: 1.35rem;
+        font-weight: 700;
+        border-left: 3px solid #10b981;
+        padding-left: 12px;
         margin-top: 0;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
     }
 
-    
-    .formulario > form > div:nth-of-type(1) {
-        background-color: #ffffff;
-        padding: 12px 15px;
-        border-radius: 8px;
+    /* Contenedores internos de los inputs del formulario */
+    .formulario form > div {
+        background-color: #f8fafc;
+        padding: 14px 18px;
+        border-radius: 10px;
         border: 1px solid #e2e8f0;
-        margin-bottom: 14px;
+        margin-bottom: 16px;
+        transition: all 0.2s ease;
     }
 
-    .formulario > form > div:nth-of-type(2) {
-        background-color: #f1f5f9;
-        padding: 12px 15px;
-        border-radius: 8px;
-        border: 1px solid #cbd5e1;
-        margin-bottom: 14px;
-    }
+        .formulario form > div:hover {
+            border-color: #e6e6fa;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+        }
 
-    
-    .formulario > form > div:nth-of-type(3) {
-        background-color: #ecfdf5;
-        padding: 12px 15px;
-        border-radius: 8px;
-        border: 1px solid #a7f3d0;
-        margin-bottom: 14px;
-    }
-
-    
-    .formulario > form > div:nth-of-type(4) {
-        background-color: #f0fdf4;
-        padding: 12px 15px;
-        border-radius: 8px;
-        border: 1px solid #bbf7d0;
-        margin-bottom: 14px;
-    }
-
+/* Etiquetas (Labels) */
 label {
-    color: #334155;
+    color: #475569;
     font-size: 0.85rem;
-    font-weight: 600;
+    font-weight: 700;
     margin-bottom: 6px;
     display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
+/* Campos de entrada */
 input[type="text"],
 input[type="number"],
-input[type="date"] {
+input[type="date"],
+.formulario input,
+.formulario select {
     width: 100%;
     padding: 10px 14px;
     background-color: #ffffff;
-    border: 1px solid #94a3b8;
+    border: 1px solid #cbd5e1;
     color: #1e293b;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 0.95rem;
     box-sizing: border-box;
+    display: block;
+    transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-input:focus {
+input:focus, select:focus {
     outline: none;
-    border-color: #0284c7;
-    box-shadow: 0 0 0 3px rgba(2, 132, 199, 0.15);
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.15);
 }
 
-
+/* Botón principal de submit */
 button[type="submit"] {
     background-color: #10b981;
     color: #ffffff;
     font-weight: 700;
     border: none;
-    padding: 12px 20px;
-    border-radius: 6px;
+    padding: 14px 30px;
+    border-radius: 8px;
     cursor: pointer;
-    width: 100%;
-    margin-top: 15px;
-    transition: background-color 0.2s ease;
+    display: block; /* Necesario para aplicar margin auto */
+    width: 50%; /* Ancho moderado para que no ocupe todo el formulario */
+    max-width: 250px; /* Tope máximo de tamaño */
+    margin: 20px auto 0 auto; /* Centrado horizontal automático (arriba, auto-lados, abajo) */
+    font-size: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+    transition: background-color 0.2s ease, transform 0.1s ease;
 }
 
     button[type="submit"]:hover {
         background-color: #059669;
     }
 
+    button[type="submit"]:active {
+        transform: scale(0.99);
+    }
 
+/* Contenedor de la Tabla de Registros */
 .column {
-    max-width: 900px !important;
     background-color: #ffffff;
-    border: 1px solid #cbd5e1;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
+    border: 1px solid #e2e8f0;
+    border-left: 3px solid #0ea5e9;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
     overflow-x: auto;
+    margin-bottom: 40px;
+    transition: background-color 1.5s ease, border-color 1.5s ease, box-shadow 1.5s ease;
 }
 
+    .column:hover {
+        background-color: #e1e5e6; /* Mismo oscurecimiento elegante */
+        border: 3px solid #0ea5e9;
+        box-shadow: 0 12px 20px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .column p strong {
+        color: #0f172a;
+        font-size: 1.1rem;
+    }
+
+/* Estilos de la Tabla */
 table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 15px;
-    background-color: #ffffff;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-top: 20px;
     border-radius: 8px;
     overflow: hidden;
+    border: 1px solid #e2e8f0;
 }
 
 th, td {
-    padding: 12px 16px;
+    padding: 14px 18px;
     text-align: left;
-    border-bottom: 1px solid #e2e8f0;
     font-size: 0.9rem;
-    color: #334155;
 }
 
 th {
-    background-color: #f1f5f9;
-    font-weight: 600;
-    color: #0f172a;
+    background-color: #f8fafc;
+    font-weight: 700;
+    color: #475569;
+    border-bottom: 2px solid #e2e8f0;
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.5px;
+}
+
+td {
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
 }
 
 tbody tr:hover {
     background-color: #f8fafc;
 }
 
+/* Botones de acción dentro de la tabla */
 td button {
-    background-color: #0284c7;
-    color: #ffffff;
     border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
+    padding: 6px 14px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 0.8rem;
-    font-weight: 500;
-    transition: background-color 0.2s ease;
+    font-weight: 600;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    transition: filter 0.2s ease;
 }
 
     td button:hover {
-        background-color: #0369a1;
+        filter: brightness(0.9);
     }

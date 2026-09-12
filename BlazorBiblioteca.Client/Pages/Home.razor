@@ -2,140 +2,200 @@
 @inject HttpClient Http
 @inject NavigationManager Navigation
 @using BlazorBiblioteca.shared
+@using BlazorBootstrap
+
+<style>
+    .bg-degrade {
+        min-height: 100vh;
+        /* Fondo con mayor profundidad y un toque moderno inspirado en interfaces corporativas */
+        background: linear-gradient(135deg, #cbd5e1 0%, #94a3b8 50%, #64748b 100%);
+        background-attachment: fixed;
+        padding: 40px 20px;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        color: #1e293b;
+    }
+
+</style>
 
 
 <PageTitle>Biblioteca</PageTitle>
 
-<h1>LIBROS DISPONIBLES </h1>
-<br />
-
-<div class="mensajesuser">
-    <p>@conexionServidor</p>
-    <p>@conexionBBDD</p>
-
-    @if (!string.IsNullOrEmpty(message))
-    {
-        <p><strong>@message</strong></p>
-    }
-
-</div>
-
-
-
+<div class="bg-degrade">
+    <h1> Biblioteca William Wallace</h1>
+    <!--<h3>LIBROS DISPONIBLES </h3>-->
+    <br />
 
     
 
-<div class="formulario">
-    <h2>Formulario</h2>
+    <div class="mensajesuser mb-4">
+        <!-- Estado del Servidor con Icono Dinámico y 1s de retraso en secuencia -->
+        <p class="d-flex align-items-center gap-2">
+            <i class="@serverIconClass fs-3"></i>
+            <span>@conexionServidor</span>
+        </p>
 
-    <EditForm Model="@libro" OnValidSubmit="CreateOrUpdateLibro" FormName="createOrUpdate">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+        <!-- Estado de la Base de Datos con Icono Dinámico y 1s de retraso en secuencia -->
+        <p class="d-flex align-items-center gap-2">
+            <i class="@dbIconClass fs-3"></i>
+            <span>@conexionBBDD</span>
+        </p>
 
-        <InputNumber @bind-Value="libro.Id" hidden></InputNumber>
-        <div>
-            <label for="NombreLibro">Nombre del libro</label>
-            <InputText id="NombreLibro" @bind-Value="libro.NombreLibro"></InputText>
-            <ValidationMessage For="(() => libro.NombreLibro)" />
-        </div>
-        <br />
+        @if (!string.IsNullOrEmpty(message))
+        {
+            <Alert Color="@alertColor" Dismissable="false">
+                <Icon Name="@alertIconName" Class="me-2"></Icon> @message
+            </Alert>
+        }
+    </div>
 
-        <div>
-        <label for="AutorLibro">Autor </label>
-        <InputText id="AutorLibro" @bind-Value="libro.AutorLibro"></InputText>
-        <ValidationMessage For="(() => libro.AutorLibro)" />
-        </div>
-        <br />
 
-        <div>
-        <label for="NumPaginas">Cantidad de paginas</label>
-        <InputNumber id="NumPaginas" @bind-Value="libro.NumPaginas"></InputNumber>
-        <ValidationMessage For="(() => libro.NumPaginas)"/>
-        </div>
-        <br />  
 
-        <div>
-        <label for="FechaPublicacion">Fecha de publicacion</label>
-        <InputDate id="FechaPublicacion" @bind-Value="libro.FechaPublicacion"></InputDate>
-        <ValidationMessage For="(() => libro.FechaPublicacion)" />
-        </div>
-        <br />
+
+
+    <div class="column formulario">
+            <h2>Formulario</h2>
+
+            <EditForm Model="@libro" OnValidSubmit="ShowLoadingDataAsync" FormName="createOrUpdate">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
+
+                <InputNumber @bind-Value="libro.Id" hidden></InputNumber>
+
+                <div>
+                    <label for="NombreLibro">Nombre del libro</label>
+                    <InputText id="NombreLibro" @bind-Value="libro.NombreLibro" placeholder=" Cien años de soledad"></InputText>
+                    <ValidationMessage For="(() => libro.NombreLibro)" />
+                </div>
+                <br />
+
+                <div>
+                    <label for="AutorLibro">Autor </label>
+                    <InputText id="AutorLibro" @bind-Value="libro.AutorLibro" placeholder=" Gabriel García Márquez"></InputText>
+                    <ValidationMessage For="(() => libro.AutorLibro)" />
+                </div>
+                <br />
+
+                <div>
+                    <label for="NumPaginas">Cantidad de paginas</label>
+                    <NumberInput id="NumPaginas" @bind-Value="libro.NumPaginas" placeholder="123..."></NumberInput>
+                    <ValidationMessage For="(() => libro.NumPaginas)"/>
+                </div>
+                <br />  
+
+                <div>
+                    <label for="FechaPublicacion">Fecha de publicacion</label>
+                    <DateInput id="FechaPublicacion" @bind-Value="libro.FechaPublicacion"></DateInput>
+                    <ValidationMessage For="(() => libro.FechaPublicacion)" />
+                </div>
+                <br />
 
         
-        <button type="submit">Guardar informacion</button>
+                <Button Color="ButtonColor.Success" type="ButtonType.Submit" Outline="true" Size="ButtonSize.Large">Guardar pelicula</Button>
+                <Preload LoadingText="Cargando..." />
         
-        <br />
+                <br />
 
-    </EditForm>
+            </EditForm>
+    </div>
 
-</div>
-
-<div class="column">
-    @if (libros.Count == 0)
-    {
-        <h3>No existen registros @message   </h3>
-    }
-    else
-    {
-        <p><strong>Listado de Libros en Biblioteca</strong></p> 
-        <table border="1">
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nombre</th>
-                    <th>Autor</th>
-                    <th>Paginas</th>
-                    <th>Publicacion</th>
-                    <th>Actualizar</th>
-                    <th>Eliminar</th>
-                </tr>
-            </thead>
-        
-            <tbody>
-                @foreach (var l in libros)
-                {
-                    <tr @key="l.Id">
-                        <td>@l.Id</td>
-                        <td>@l.NombreLibro</td>
-                        <td>@l.AutorLibro</td>
-                        <td>@l.NumPaginas</td>
-                        <td>@l.FechaPublicacion</td>
-
-                        <td><button @onclick="() => this.libro = l">Actualizar</button></td>
-                        <td><button @onclick="() => DeleteLibro(l.Id)">Eliminar</button></td>
+    <div class="column">
+        @if (libros.Count == 0)
+        {
+            <h3>No existen registros @message   </h3>
+        }
+        else
+        {
+            <p><strong>Listado de Libros en Biblioteca</strong></p> 
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th>Autor</th>
+                        <th>Paginas</th>
+                        <th>Publicacion</th>
+                        <th>Actualizar</th>
+                        <th>Eliminar</th>
                     </tr>
-                }
-            </tbody>
-        </table> 
-    }
-</div>
+                </thead>
+        
+                <tbody>
+                    @foreach (var l in libros)
+                    {
+                        <tr @key="l.Id">
+                            <td>@l.Id</td>
+                            <td>@l.NombreLibro</td>
+                            <td>@l.AutorLibro</td>
+                            <td>@l.NumPaginas</td>
+                            <td>@l.FechaPublicacion</td>
 
+                            
+                            <td><Button Color="ButtonColor.Warning" Size="ButtonSize.Medium" @onclick="() => this.libro = l">Actualizar</Button></td>
+                            
+                            <td><Button Color="ButtonColor.Danger" Outline="true" Size="ButtonSize.Medium" @onclick="() => ShowLoadingDeleteAsync(l.Id)">Eliminar</Button></td>
+                        </tr>
+                    }
+                </tbody>
+            </table> 
+        }
+    </div>
+
+</div>
 @code {
-    string conexionServidor = "conectando...";
-    string conexionBBDD = "Conectando....";
+    string conexionServidor = "Iniciando verificación...";
+    string conexionBBDD = "Iniciando verificación...";
+
+    // Clases CSS por defecto para los iconos Bootstrap Icons
+    string serverIconClass = "bi bi-database-dash text-danger";
+    string dbIconClass = "bi bi-patch-minus-fill text-danger";
 
     string message = string.Empty;
+    AlertColor alertColor = AlertColor.Primary;
+    IconName alertIconName = IconName.CheckCircleFill;
+
     List<Libro> libros = new List<Libro>();
 
     [SupplyParameterFromForm(FormName = "createOrUpdate")]
     public Libro libro { get; set; } = new();
 
+
+
     async Task ProbarConeccion()
     {
-        
+        var esperarUnSegundo = () => Task.Delay(1000);
+
+        // Estado inicial de transición / prueba
+        conexionServidor = "Conectando al servidor...";
+        serverIconClass = "bi bi-database-dash text-danger";
+        conexionBBDD = "Conectando a base de datos...";
+        dbIconClass = "bi bi-patch-minus-fill text-danger";
+        StateHasChanged();
+        await esperarUnSegundo();
+
         try
         {
-            // Al usar HttpClient con BaseAddress, solo pasa la ruta relativa comenzando con "/"
+            // Prueba Servidor
             var respuesta = await Http.GetStringAsync("api/libros/ConexionServidor");
             conexionServidor = respuesta;
+            serverIconClass = "bi bi-patch-check-fill text-success";
+            StateHasChanged();
+            await esperarUnSegundo();
 
+            // Prueba Base de Datos
             var respuestaBBDD = await Http.GetStringAsync("api/libros/ConexionBBDD");
             conexionBBDD = respuestaBBDD;
+            dbIconClass = "bi bi-database-check text-success";
+            StateHasChanged();
         }
         catch (Exception ex)
         {
             conexionServidor = "Error al conectar al servidor";
-            conexionBBDD = $"Detalle:{ex.Message}";
+            serverIconClass = "bi bi-database-dash text-danger";
+
+            conexionBBDD = $"Detalle: {ex.Message}";
+            dbIconClass = "bi bi-patch-minus-fill text-danger";
+            StateHasChanged();
         }
 
     }
@@ -146,6 +206,29 @@
         await ObtenerLibros();
     }
 
+    [Inject] protected PreloadService PreloadService { get; set; } = default!;
+
+    private async Task ShowLoadingDataAsync()
+    {
+        PreloadService.Show(SpinnerColor.Light, "Cargando...");
+        await Task.Delay(3000);
+
+        await CreateOrUpdateLibro();
+
+        PreloadService.Hide();
+    }
+
+    
+    private async Task ShowLoadingDeleteAsync(int id)
+    {
+        PreloadService.Show(SpinnerColor.Danger, "Eliminando...");
+        await Task.Delay(2000); 
+
+        await DeleteLibro(id);
+        PreloadService.Hide();
+    }
+
+
     async Task CreateLibro()
     {
         var urlBase = Navigation.BaseUri;
@@ -153,6 +236,9 @@
 
         if (res.IsSuccessStatusCode)
         {
+            alertColor = AlertColor.Success;
+            alertIconName = IconName.CheckCircleFill;
+
             message = "Nuevo libro disponible!";
             libro = new();
         }
@@ -170,6 +256,9 @@
 
         if (res.IsSuccessStatusCode)
         {
+            alertColor = AlertColor.Warning;
+            alertIconName = IconName.ExclamationCircleFill;
+
             message = $"Libro {libro.NombreLibro} actualizado con exito!!";
         }
         else
@@ -194,7 +283,7 @@
 
     async Task ObtenerLibros()
     {
-        
+
         try
         {
             var libr = await Http.GetFromJsonAsync<List<Libro>>("api/libros/ObtenerLibros");
@@ -217,6 +306,9 @@
 
         if (res.IsSuccessStatusCode) 
         {
+            alertColor = AlertColor.Danger;
+            alertIconName = IconName.ExclamationTriangleFill;
+
             message = "Libro eliminado";
 
             await ObtenerLibros();

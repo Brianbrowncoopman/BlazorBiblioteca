@@ -6,14 +6,28 @@
     <Nullable>enable</Nullable>
     <NoDefaultLaunchSettingsFile>true</NoDefaultLaunchSettingsFile>
     <StaticWebAssetProjectMode>Default</StaticWebAssetProjectMode>
+ 
+  
+	  <!--Service worker-->
+
+	  <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazor.Bootstrap" Version="4.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.29" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\BlazorBiblioteca.shared\BlazorBiblioteca.shared.csproj" />
   </ItemGroup>
+
+	<ItemGroup>
+		<ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <Folder Include="wwwroot\" />
+	</ItemGroup>
 
 </Project>
