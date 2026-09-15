@@ -8,7 +8,7 @@ self.addEventListener('fetch', event => event.respondWith(onFetch(event)));
 
 const cacheNamePrefix = 'offline-cache-';
 const cacheName = `${cacheNamePrefix}${self.assetsManifest.version}`;
-const offlineAssetsInclude = [ /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/, /\.webmanifest$/ ];
+const offlineAssetsInclude = [ /\.dll$/, /\.pdb$/, /\.wasm/, /\.html/, /\.js$/, /\.json$/, /\.css$/, /\.woff$/, /\.png$/, /\.jpe?g$/, /\.gif$/, /\.ico$/, /\.blat$/, /\.dat$/ ];
 const offlineAssetsExclude = [ /^service-worker\.js$/ ];
 
 // Replace with your base path if you are hosting on a subfolder. Ensure there is a trailing '/'.
@@ -18,6 +18,9 @@ const manifestUrlList = self.assetsManifest.assets.map(asset => new URL(asset.ur
 
 async function onInstall(event) {
     console.info('Service worker: Install');
+
+    // añadido por mi
+    //self.skipWaiting();
 
     // Fetch and cache all matching items from the assets manifest
     const assetsRequests = self.assetsManifest.assets
@@ -46,7 +49,7 @@ async function onFetch(event) {
         const shouldServeIndexHtml = event.request.mode === 'navigate'
             && !manifestUrlList.some(url => url === event.request.url);
 
-        const request = shouldServeIndexHtml ? 'index.html' : event.request;
+        const request = shouldServeIndexHtml ? 'App.razor' : event.request;
         const cache = await caches.open(cacheName);
         cachedResponse = await cache.match(request);
     }
