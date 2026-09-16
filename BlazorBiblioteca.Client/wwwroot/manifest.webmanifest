@@ -1,6 +1,6 @@
 {
-  "name": "Peliculas",
-  "short_name": "Peliculas",
+  "name": "BlazorBiblioteca",
+  "short_name": "BlazorBiblioteca",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#ffffff",
